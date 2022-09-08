@@ -17,7 +17,7 @@ create_user() {
 
     openssl genrsa -out ${username}.key ${key_size}
     openssl req -new -key ${username}.key -out ${username}.csr -subj "/O=clientcert/CN=${username}"
-	openssl x509 -req -in ${username}.csr -CA ca.crt -CAkey ca.key -set_serial $(date +%s) -out ${username}.crt
+	openssl x509 -req -in ${username}.csr -CA ca.crt -CAkey ca.key -set_serial $(date +%s) -days 1000 -out ${username}.crt
 	rm ${username}.csr
 	openssl pkcs12 -export -out ${username}.p12 -inkey ${username}.key -in ${username}.crt -certfile ca.crt # -password pass:''
 }
